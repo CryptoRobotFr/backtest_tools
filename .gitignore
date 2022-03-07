@@ -1,3 +1,15 @@
+# Node
+node_modules/
+
+# Database
+# database/
+# download_data.js
+# update_data.js
+# !database/coin_list.json
+# !database/exchange_limit.json
+# !database/ttf_ms.json
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "ccxt": "^1.67.19",
+    "convert-csv-to-array": "^1.0.3",
+    "csv-parse": "^5.0.4",
+    "csv-parser": "^3.0.0",
+    "csv-writer": "^1.6.0"
+  }
+}
