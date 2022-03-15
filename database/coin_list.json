@@ -38,7 +38,7 @@
         "ENJ/USDT"
     ],
 
-    "full_ftx_algo_list" : [
+    "ftx_main_list" : [
         "BTC/USD",
         "DOGE/USD",
         "MANA/USD",

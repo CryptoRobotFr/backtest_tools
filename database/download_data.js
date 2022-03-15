@@ -131,12 +131,16 @@ async function get_multi_ohlcv(exchange, pair_list, tf_list, start_date, exchang
     }
 }
 
+
+// --- Edit exchange here ---
 let exchange = new ccxt.binance({ enableRateLimit: true })
 
-pair_list = ["BTC/USDT"]
-// pair_list = coin_list['full_ftx_algo_list']
+// --- Edit coin list here ---
+pair_list = ["BTC/USDT", "XTZ/USDT"]
+// pair_list = coin_list['ftx_main_list']
 
-timeframe_list = ['1h']
+// --- Edit timeframe list and start date here ---
+timeframe_list = ['5m']
 start_date = "01-06-2017"
 
 
