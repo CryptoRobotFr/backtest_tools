@@ -8,3 +8,10 @@ def get_historical_from_db(exchange, symbol, timeframe, path="database/"):
     df.index = pd.to_datetime(df.index, unit='ms')
     del df['date']
     return df
+
+def get_historical_from_path(path):
+    df = pd.read_csv(filepath_or_buffer=path)
+    df = df.set_index(df['date'])
+    df.index = pd.to_datetime(df.index, unit='ms')
+    del df['date']
+    return df
