@@ -19,6 +19,12 @@ Installation des dépendances python (Bien vérifier que vous avez (.venv) au d�
 Installation des dépendances node:
 >npm install
 
+N'oublier pas d'installer les modules suivant:
+ - pandas (pip install pandas)
+ - ccxt (pip install ccxt)
+ - matplotlib (pip install matplotlib)
+ - ta (pip install ta)
+
 Le projet est prêt à être utilisé.
 
 ---
