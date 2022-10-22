@@ -12,6 +12,7 @@ def basic_single_asset_backtest(trades, days):
     
     df_trades['trade_result'] = df_trades["close_trade_size"] - df_trades["open_trade_size"] - df_trades["open_fee"]
     df_trades['trade_result_pct'] = df_trades['trade_result']/df_trades["open_trade_size"]
+    df_trades['trade_result_pct_wallet'] = df_trades['trade_result']/(df_trades["wallet"]+df_trades["trade_result"])
     
     df_trades['wallet_ath'] = df_trades['wallet'].cummax()
     df_trades['drawdown'] = df_trades['wallet_ath'] - df_trades['wallet']
@@ -73,6 +74,7 @@ def basic_multi_asset_backtest(trades, days):
     df_trades = df_trades.copy()
     df_trades['trade_result'] = df_trades["close_trade_size"] - df_trades["open_trade_size"] - df_trades["open_fee"] - df_trades["close_fee"]
     df_trades['trade_result_pct'] = df_trades['trade_result']/(df_trades["open_trade_size"] + df_trades["open_fee"])
+    df_trades['trade_result_pct_wallet'] = df_trades['trade_result']/(df_trades["wallet"]+df_trades["trade_result"])
     good_trades = df_trades.loc[df_trades['trade_result_pct'] > 0]
     
     df_trades['wallet_ath'] = df_trades['wallet'].cummax()
@@ -164,6 +166,7 @@ def get_metrics(df_trades, df_days):
     df_trades_copy = df_trades.copy()
     df_trades_copy['trade_result'] = df_trades_copy["close_trade_size"] - df_trades_copy["open_trade_size"] - df_trades_copy["open_fee"] - df_trades_copy["close_fee"]
     df_trades_copy['trade_result_pct'] = df_trades_copy['trade_result']/df_trades_copy["open_trade_size"]
+    df_trades_copy['trade_result_pct_wallet'] = df_trades_copy['trade_result']/(df_trades_copy["wallet"]+df_trades_copy["trade_result"])
     good_trades = df_trades_copy.loc[df_trades_copy['trade_result_pct'] > 0]
     win_rate = len(good_trades) / len(df_trades)
     avg_profit = df_trades_copy['trade_result_pct'].mean()
