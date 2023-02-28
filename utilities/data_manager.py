@@ -8,6 +8,8 @@ import os
 from datetime import datetime, timedelta
 from tqdm.auto import tqdm
 import itertools
+import timeit
+import time
 
 
 class ExchangeDataManager:
@@ -41,6 +43,10 @@ class ExchangeDataManager:
         "bitget": {
             "ccxt_object": ccxt.bitget(config={"enableRateLimit": True}),
             "limit_size_request": 100,
+        },
+        "bitmart": {
+            "ccxt_object": ccxt.bitmart(config={"enableRateLimit": True}),
+            "limit_size_request": 500,     
         }
     }
 
@@ -157,12 +163,12 @@ class ExchangeDataManager:
 
                 dt_or_false = await self.is_data_missing(file_name, last_dt, str(start_date))
                 
-               
                 if dt_or_false:
 
                     tasks = []
                     current_timestamp = int(dt_or_false.timestamp() * 1000)
-
+                    turn = 0
+                 
                     while current_timestamp <= end_timestamp:
                         tasks.append(
                             asyncio.create_task(
@@ -180,7 +186,7 @@ class ExchangeDataManager:
                     await self.exchange.close()
                   
                     results = list(itertools.chain(*results))
-
+               
                     self.pbar.close()
 
                     if results:
@@ -188,9 +194,10 @@ class ExchangeDataManager:
                             results,
                             columns=["date", "open", "high", "low", "close", "volume"],
                         )
-                       
-                        final.set_index("date")
-                        final = final[~final.index.duplicated(keep="first")]
+                        final.set_index('date', drop=False, inplace=True)
+                        final = final[~final.index.duplicated(keep='first')]
+                        
+                        
                         flag_header = (
                             ("a", False) if os.path.exists(file_name) else ("w", True)
                         )
@@ -203,7 +210,7 @@ class ExchangeDataManager:
                 else:
                     print("\tDonnées déjà récupérées")
 
-                print("\033[H\033[J", end="")
+                #print("\033[H\033[J", end="")
 
     async def download_tf(self, coin, interval, start_timestamp) -> list:
         tests = 0
@@ -235,7 +242,6 @@ class ExchangeDataManager:
                 return False
         else:
             return datetime.fromisoformat(start_date)
-
         return pytz.utc.localize(df.index[-2])
 
     def create_intervals(self, start_date, end_date, delta):
@@ -278,6 +284,7 @@ class ExchangeDataManager:
                     )
 
         return pd.DataFrame(files_data)
+
 
 class TooManyError(Exception):
     pass
