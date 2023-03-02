@@ -13,12 +13,6 @@ Mise en place de l'environnement virtuel (très recommandé):
 >.venv\Scripts\activate  
 >pip install -r .\requirements.txt  
 
-Installation des dépendances python (Bien vérifier que vous avez (.venv) au début de votre ligne de commande):
->pip install -r requirements.txt
-
-Installation des dépendances node:
->npm install
-
 Le projet est prêt à être utilisé.
 
 ---
